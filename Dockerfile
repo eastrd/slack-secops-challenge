@@ -10,3 +10,6 @@ RUN go test 2>&1 | grep "PASS" || exit 2
 # Compile to binary exec
 RUN go build -o server api.go main.go structs.go
 
+EXPOSE 443/tcp
+
+CMD ["./server"]
