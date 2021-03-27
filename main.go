@@ -36,9 +36,9 @@ func main() {
 	mux := http.NewServeMux()
 	mux.HandleFunc("/getwordfreq", handleGetWordFrequency)
 
-	log.Println("server started at port 8080")
+	log.Println("server started at port 443")
 
-	err := http.ListenAndServeTLS(":8080", CERTFILE, KEYFILE, http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+	err := http.ListenAndServeTLS(":443", CERTFILE, KEYFILE, http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		// Check Basic Auth before /getwordfreq
 		u, p, ok := r.BasicAuth()
 		if !ok {
