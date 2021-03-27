@@ -2,18 +2,11 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
+	"log"
+	"net/http"
 	"strings"
 	"unicode"
 )
-
-// WordCount :
-//	- Total number of words
-//	- A map that records individual words with their total frequency
-type WordCount struct {
-	TotalWords int            `json:"count"`
-	FreqMap    map[string]int `json:"words"`
-}
 
 // TODO. Support other alphabets outside english but within unicode, e.g. French / Greek / Vietnamese
 //	Excluding Eastern-Asian characters since it's more complicated to decide the word composition
@@ -59,21 +52,61 @@ func computeFrequency(s string) map[string]int {
 // Convert a frequency map into struct
 //	which includes additional data on total count of non-repeating words
 func makeJSON(freqMap map[string]int) ([]byte, error) {
-	wordCount := WordCount{
+	wordFreq := WordFrequency{
 		TotalWords: len(freqMap),
 		FreqMap:    freqMap,
 	}
-	b, err := json.Marshal(wordCount)
+	b, err := json.Marshal(wordFreq)
 	if err != nil {
 		return nil, err
 	}
 	return b, nil
 }
 
-func main() {
-	b, err := makeJSON(computeFrequency("aasdasda"))
-	if err != nil {
-		fmt.Println(err)
+// API endpoint for calculating word frequency
+// Using POST as the input can be greater than 2MB
+func handleGetWordFrequency(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	switch r.Method {
+	case "POST":
+		var userInput UserInput
+		decoder := json.NewDecoder(r.Body)
+		err := decoder.Decode(&userInput)
+		if err != nil {
+			// JSON Decode failed, i.e. User sent an invalid request (Not in JSON)
+			//	Reply 400 Bad Request
+			log.Printf("error converting request to JSON: %s\n", err.Error())
+			w.WriteHeader(http.StatusBadRequest)
+			return
+		}
+		log.Printf("received: %s\n", userInput.InputSentence)
+
+		b, err := makeJSON(computeFrequency(userInput.InputSentence))
+		if err != nil {
+			log.Printf("error making JSON for input: %s, error detail: %s", userInput.InputSentence, err.Error())
+		}
+		w.Write(b)
+	default:
+		// Default to 404 Not Found for non-POST requests
+		w.WriteHeader(http.StatusNotFound)
 	}
-	fmt.Printf("%+v", string(b))
 }
+
+func main() {
+	http.HandleFunc("/getwordfreq", handleGetWordFrequency)
+
+	log.Println("server started at port 8080")
+	// err := http.ListenAndServeTLS(":8090", "../certs/cert.pem", "../certs/key.pem", nil)
+	err := http.ListenAndServe(":8080", nil)
+	if err != nil {
+		panic(err)
+	}
+}
+
+/*
+	TODO.
+	- Unit test for HTTP server
+	- API Authetication with username + password
+	- TLS support + environment variable
+	- Docker
+*/
