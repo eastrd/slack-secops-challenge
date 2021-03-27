@@ -8,9 +8,6 @@ import (
 	"unicode"
 )
 
-// TODO. Support other alphabets outside english but within unicode, e.g. French / Greek / Vietnamese
-//	Excluding Eastern-Asian characters since it's more complicated to decide the word composition
-
 // Given a string, record total count of words (case-insensitive)
 // Counted words will all be returned in lower-case
 func computeFrequency(s string) map[string]int {
