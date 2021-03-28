@@ -7,17 +7,18 @@
 
 ## Design Decisions
 
-### Use Golang native libraries
-- As for a simple API, native libraries are sufficient
+### Using Golang native net/http libraries
+- As for a simple API, native libraries are sufficient at this stage
 - Also lowers the risks (not eliminate) of vulnerabilities coming from third-parties
 
-### Use Basic Auth instead of Digest Auth
-- For Digest Auth, I could go with either using a Golang package such as "go-http-auth" or use Nginx with Digest auth. However, both of them lack popularity and seem somewhat obsecure and could potentially be vulnerable in production.
-- On the other hand, I'm already using HTTPS, Basic auth is widely used compare to Digest and would be sufficient.
+### Choosing Basic Auth instead of Digest Auth
+- For Digest Auth, I could go with either using a Golang package such as "go-http-auth" or use Nginx with Digest auth. However, both of them lack popularity and seem somewhat obsecure and could potentially be vulnerable in production. 
+- Hence my best option for Digest auth would be to implement one myself. However, given that the time limit for this challenge is only one week and I will probably not be able to work on this much during weekdays, using Basic auth for now and migrating the project to Digest auth in the future would be a better option.
+- On the other hand, I'm already using HTTPS, Basic auth would be sufficient. It's also more widely supported compare to Digest auth. 
 
 ### Not using a CI/CD tool
-- I wasn't sure if I'm authorized to provide the SSH key of the server to a third-party (e.g. Bamboo/CircleCI) as this could be considered unsecure. However that can be done if needed.
+- I wasn't sure if I'm authorized to provide the SSH key of the server to a third-party (e.g. Bamboo/CircleCI) as this could be considered unsecure. However, that can be done if needed in the future.
 
 ### Using Docker
 - Because it's Portable, Consistent, Clean, and Friendly to automation tools.
-- Easily setup autostart containers when the server reboots or crashes
+- Can easily setup autostart containers when the server reboots or crashes.
