@@ -28,6 +28,11 @@
 }
 ```
 
+#### Response Code:
+- "404 Not Found" by default if access other routes / using wrong http option (e.g. GET/PUT)
+- "400 Bad Request" if the POST data is not a valid JSON
+- "200 OK" Otherwise
+
 -----
 
 ## Feature Requests
