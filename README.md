@@ -1,9 +1,38 @@
 # slack-secops-challenge
 
+## API Documentation
+
+### /getwordfreq
+
+#### Authentication
+- Basic Authentication which requires username and password
+
+#### Input:
+- A POST JSON request with format 
+        {
+            "input" : "[YOUR SENTENCE HERE]"
+        }
+
+#### Output:
+- A JSON response with format 
+        {
+            "count" :   [int: NUMBER OF UNIQUE WORDS IN THE SENTENCE],
+            "words" :   {
+                "[UNIQUE WORDS #1]" :  [int: NUMBER OF TIMES APPEARED IN THE SENTENCE],
+                "[UNIQUE WORDS #2]" :  [int: NUMBER OF TIMES APPEARED IN THE SENTENCE],
+                ...
+            }
+        }
+
+-----
+
 ## Feature Requests
+
 ### Other languages
 - It'd be nice to support other alphabets outside english, e.g. French / Greek / Vietnamese alphabets.
 - Might need to exclude Eastern-Asian characters since it's more complicated to decide what forms a word
+
+-----
 
 ## Design Decisions
 
