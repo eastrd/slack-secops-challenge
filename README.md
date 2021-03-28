@@ -36,6 +36,13 @@
 
 -----
 
+## Deployment Instructions
+1. Install Docker
+2. Build image: ```docker build -t secops-challenge-server .```
+3. Start Container: ```docker run -itdit --restart unless-stopped --env CERT=[PATH TO CERT FILE] --env KEY=[PATH TO KEY FILE] --env BASIC_USER=[BASIC AUTH USERNAME] --env BASIC_PASS=[BASIC AUTH PASSWORD] -p 0.0.0.0:443:443/tcp secops-challenge-server```
+
+-----
+
 ## Feature Requests
 
 ### Other languages
