@@ -23,6 +23,9 @@ func TestComputeFrequency(t *testing.T) {
 		"One word #2": {input: " !@#!#@! hello hello hello123123!@#$!#%!@#!@#!   12312 ", expected: map[string]int{
 			"hello": 3,
 		}},
+		"One word #3": {input: "danny danny danny", expected: map[string]int{
+			"danny": 3,
+		}},
 		"From Slack Email": {input: "Welcome to Slack!", expected: map[string]int{
 			"welcome": 1,
 			"to":      1,
