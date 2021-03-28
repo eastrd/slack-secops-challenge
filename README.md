@@ -9,20 +9,24 @@
 
 #### Input:
 - A POST JSON request with format 
-        {
-            "input" : "[YOUR SENTENCE HERE]"
-        }
+```
+{
+    "input" : "[YOUR SENTENCE HERE]"
+}
+```
 
 #### Output:
 - A JSON response with format 
-        {
-            "count" :   [int: NUMBER OF UNIQUE WORDS IN THE SENTENCE],
-            "words" :   {
-                "[UNIQUE WORDS #1]" :  [int: NUMBER OF TIMES APPEARED IN THE SENTENCE],
-                "[UNIQUE WORDS #2]" :  [int: NUMBER OF TIMES APPEARED IN THE SENTENCE],
-                ...
-            }
-        }
+```
+{
+    "count" :   [int: NUMBER OF UNIQUE WORDS IN THE SENTENCE],
+    "words" :   {
+        "[UNIQUE WORDS #1]" :  [int: NUMBER OF TIMES APPEARED IN THE SENTENCE],
+        "[UNIQUE WORDS #2]" :  [int: NUMBER OF TIMES APPEARED IN THE SENTENCE],
+        ...
+    }
+}
+```
 
 -----
 
